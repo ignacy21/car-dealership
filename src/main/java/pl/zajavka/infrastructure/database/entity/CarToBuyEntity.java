@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = "carToBuyId")
 @ToString(of = {"carToBuyId", "vin", "brand", "model", "year", "color", "price"})
 @NoArgsConstructor

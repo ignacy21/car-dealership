@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = "mechanicId")
 @ToString(of = {"mechanicId", "name", "surname", "pesel"})
 @NoArgsConstructor

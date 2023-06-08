@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = "partId")
 @ToString(of = {"partId", "serialNumber", "description", "price"})
 @NoArgsConstructor
