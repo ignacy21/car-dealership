@@ -39,7 +39,7 @@ public class CarServiceRequestService {
 
         CarServiceRequestEntity carServiceRequestEntity = buildCarServiceEntity(request, car, customer);
         customer.addServiceRequest(carServiceRequestEntity);
-        customerService.savServiceRequest(customer);
+        customerService.saveServiceRequest(customer);
     }
 
     private CarServiceRequestEntity buildCarServiceEntity(
@@ -85,6 +85,6 @@ public class CarServiceRequestService {
 
         CarServiceRequestEntity carServiceRequestEntity = buildCarServiceEntity(request, car, customer);
         customer.addServiceRequest(carServiceRequestEntity);
-        customerService.savServiceRequest(customer);
+        customerService.saveServiceRequest(customer);
     }
 }

@@ -25,7 +25,7 @@ public class CustomerService {
         return customer.get();
     }
 
-    public void savServiceRequest(CustomerEntity customer) {
+    public void saveServiceRequest(CustomerEntity customer) {
         customerDAO.saveServiceRequest(customer);
     }
 
