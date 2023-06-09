@@ -2,20 +2,26 @@ package pl.zajavka.integration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
+import pl.zajavka.buisness.CarPurchaseService;
+import pl.zajavka.buisness.CarService;
+import pl.zajavka.buisness.CustomerService;
+import pl.zajavka.buisness.SalesmanService;
 import pl.zajavka.buisness.management.CarDealerShipManagementService;
 import pl.zajavka.buisness.management.FileDataPreparationService;
-import pl.zajavka.buisness.management.InputDataCache;
 import pl.zajavka.infrastructure.configuration.HibernateUtil;
 import pl.zajavka.infrastructure.database.repository.CarDealershipManagementRepository;
-
-import java.util.List;
-import java.util.Map;
+import pl.zajavka.infrastructure.database.repository.CarRepository;
+import pl.zajavka.infrastructure.database.repository.CustomerRepository;
+import pl.zajavka.infrastructure.database.repository.SalesmanRepository;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CarDealershipTest {
 
     private CarDealerShipManagementService carDealerShipManagementService;
+    private CarPurchaseService carPurchaseService;
+
+
 
     @BeforeEach
     void beforeEach() {
@@ -23,6 +29,11 @@ public class CarDealershipTest {
                 new CarDealershipManagementRepository(),
                 new FileDataPreparationService()
         );
+        this.carPurchaseService = new CarPurchaseService(
+                new FileDataPreparationService(),
+                new CustomerService(new CustomerRepository()),
+                new CarService(new CarRepository()),
+                new SalesmanService(new SalesmanRepository()));
     }
 
     @AfterAll
@@ -49,6 +60,7 @@ public class CarDealershipTest {
     @Order(3)
     void purchase() {
         log.info("### RUNNING ORDER 3");
+        carPurchaseService.purchase();
     }
 
     @Test
@@ -61,6 +73,7 @@ public class CarDealershipTest {
     @Order(5)
     void processServiceRequest() {
         log.info("### RUNNING ORDER 5");
+//        carServiceProcessingService.process();
     }
 
     @Test

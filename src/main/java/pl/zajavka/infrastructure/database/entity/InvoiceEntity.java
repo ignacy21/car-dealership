@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = "invoiceId")
 @ToString(of = {"invoiceId", "invoiceNumber", "dateTime"})
 @NoArgsConstructor
@@ -25,7 +27,7 @@ public class InvoiceEntity {
     private String invoiceNumber;
 
     @Column(name = "date_time")
-    private LocalDateTime dateTime;
+    private OffsetDateTime dateTime;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_to_buy_id")

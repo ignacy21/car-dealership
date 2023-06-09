@@ -6,6 +6,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @ToString(of = {"addressId", "country", "city", "postalCode", "address"})
 @EqualsAndHashCode(of = "addressId")
 @NoArgsConstructor

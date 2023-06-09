@@ -172,3 +172,18 @@ CREATE TABLE service_mechanic
             REFERENCES service (service_id)
 );
 
+--SELECT * FROM service_mechanic;
+--SELECT * FROM service_part;
+--SELECT * FROM car_service_request;
+--SELECT * FROM invoice;
+--SELECT * FROM mechanic;
+--SELECT * FROM part;
+--SELECT * FROM service;
+--SELECT * FROM car_to_service;
+--SELECT * FROM car_to_buy;
+--SELECT * FROM customer;
+--SELECT * FROM address;
+--SELECT * FROM salesman;
+
+
+
