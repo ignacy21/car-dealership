@@ -6,6 +6,7 @@ public interface Keys {
         INIT,
         BUY_FIRST_TIME,
         BUY_AGAIN,
+        SERVICE_REQUEST,
     }
 
     enum Entity {
@@ -15,5 +16,9 @@ public interface Keys {
         SERVICE,
         PART,
         CUSTOMER
+    }
+
+    enum Constants {
+        WHAT,
     }
 }
