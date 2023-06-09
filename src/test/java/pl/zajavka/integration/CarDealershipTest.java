@@ -7,6 +7,7 @@ import pl.zajavka.buisness.CarService;
 import pl.zajavka.buisness.CustomerService;
 import pl.zajavka.buisness.SalesmanService;
 import pl.zajavka.buisness.management.CarDealerShipManagementService;
+import pl.zajavka.buisness.management.CarServiceRequestService;
 import pl.zajavka.buisness.management.FileDataPreparationService;
 import pl.zajavka.infrastructure.configuration.HibernateUtil;
 import pl.zajavka.infrastructure.database.repository.CarDealershipManagementRepository;
@@ -20,6 +21,7 @@ public class CarDealershipTest {
 
     private CarDealerShipManagementService carDealerShipManagementService;
     private CarPurchaseService carPurchaseService;
+    private CarServiceRequestService carServiceRequestService;
 
 
 
@@ -34,6 +36,11 @@ public class CarDealershipTest {
                 new CustomerService(new CustomerRepository()),
                 new CarService(new CarRepository()),
                 new SalesmanService(new SalesmanRepository()));
+        this.carServiceRequestService = new CarServiceRequestService(
+                new FileDataPreparationService(),
+                new CarService(new CarRepository()),
+                new CustomerService(new CustomerRepository())
+        );
     }
 
     @AfterAll
@@ -67,13 +74,13 @@ public class CarDealershipTest {
     @Order(4)
     void makeServiceRequest() {
         log.info("### RUNNING ORDER 4");
+        carServiceRequestService.requestService();
     }
 
     @Test
     @Order(5)
     void processServiceRequest() {
         log.info("### RUNNING ORDER 5");
-//        carServiceProcessingService.process();
     }
 
     @Test
