@@ -2,18 +2,12 @@ package pl.zajavka.integration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import pl.zajavka.buisness.CarPurchaseService;
-import pl.zajavka.buisness.CarService;
-import pl.zajavka.buisness.CustomerService;
-import pl.zajavka.buisness.SalesmanService;
+import pl.zajavka.buisness.*;
 import pl.zajavka.buisness.management.CarDealerShipManagementService;
 import pl.zajavka.buisness.management.CarServiceRequestService;
 import pl.zajavka.buisness.management.FileDataPreparationService;
 import pl.zajavka.infrastructure.configuration.HibernateUtil;
-import pl.zajavka.infrastructure.database.repository.CarDealershipManagementRepository;
-import pl.zajavka.infrastructure.database.repository.CarRepository;
-import pl.zajavka.infrastructure.database.repository.CustomerRepository;
-import pl.zajavka.infrastructure.database.repository.SalesmanRepository;
+import pl.zajavka.infrastructure.database.repository.*;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -23,6 +17,7 @@ public class CarDealershipTest {
     private CarPurchaseService carPurchaseService;
     private CarServiceRequestService carServiceRequestService;
 
+    private CarServiceProcessingService carServiceProcessingService;
 
 
     @BeforeEach
@@ -39,7 +34,21 @@ public class CarDealershipTest {
         this.carServiceRequestService = new CarServiceRequestService(
                 new FileDataPreparationService(),
                 new CarService(new CarRepository()),
-                new CustomerService(new CustomerRepository())
+                new CustomerService(new CustomerRepository()),
+                new CarServiceRequestRepository()
+        );
+        this.carServiceProcessingService = new CarServiceProcessingService(
+                new FileDataPreparationService(),
+                new MechanicService(new MechanicRepository()),
+                new CarService(new CarRepository()),
+                new ServiceCatalogService(new ServiceRepository()),
+                new PartCatalogService(new PartRepository()),
+                new CarServiceRequestService(
+                        new FileDataPreparationService(),
+                        new CarService(new CarRepository()),
+                        new CustomerService(new CustomerRepository()),
+                        new CarServiceRequestRepository()),
+                new ServiceRequestProcessingRepository()
         );
     }
 
@@ -81,6 +90,7 @@ public class CarDealershipTest {
     @Order(5)
     void processServiceRequest() {
         log.info("### RUNNING ORDER 5");
+        carServiceProcessingService.process();
     }
 
     @Test

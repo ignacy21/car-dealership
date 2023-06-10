@@ -3,6 +3,7 @@ package pl.zajavka.buisness.management;
 import lombok.AllArgsConstructor;
 import pl.zajavka.buisness.CarService;
 import pl.zajavka.buisness.CustomerService;
+import pl.zajavka.buisness.DAO.CarServiceRequestDAO;
 import pl.zajavka.domain.CarServiceRequest;
 import pl.zajavka.infrastructure.database.entity.CarServiceRequestEntity;
 import pl.zajavka.infrastructure.database.entity.CarToBuyEntity;
@@ -13,6 +14,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -21,6 +23,7 @@ public class CarServiceRequestService {
     private final FileDataPreparationService fileDataPreparationService;
     private final CarService carService;
     private final CustomerService customerService;
+    private final CarServiceRequestDAO carServiceRequestDAO;
 
     public void requestService() {
 
@@ -86,5 +89,17 @@ public class CarServiceRequestService {
         CarServiceRequestEntity carServiceRequestEntity = buildCarServiceEntity(request, car, customer);
         customer.addServiceRequest(carServiceRequestEntity);
         customerService.saveServiceRequest(customer);
+    }
+
+    public CarServiceRequestEntity findAnyActiveRequests(String carVin) {
+        Set<CarServiceRequestEntity> serviceRequests = carServiceRequestDAO.findActiveServiceRequestsByCarVin(carVin);
+        if (serviceRequests.size() != 1) {
+            throw new RuntimeException(
+                    "There should be only one active service request at a time, car vin: [%s]".formatted(carVin));
+        }
+        return serviceRequests.stream()
+                .findAny()
+                .orElseThrow(() -> new RuntimeException(
+                        "Could not find any service requests, car vin: [%s]".formatted(carVin)));
     }
 }

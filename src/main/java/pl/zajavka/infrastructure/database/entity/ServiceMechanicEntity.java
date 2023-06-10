@@ -6,6 +6,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = "serviceMechanicId")
 @ToString(of = {"serviceMechanicId", "hours", "comment"})
 @NoArgsConstructor

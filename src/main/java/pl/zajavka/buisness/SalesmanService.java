@@ -11,6 +11,8 @@ import java.util.Optional;
 public class SalesmanService {
 
     private final SalesmanDAO salesmanDAO;
+
+
     public SalesmanEntity findSalesman(String pesel) {
         Optional<SalesmanEntity> salesman = salesmanDAO.findByPesel(pesel);
         if (salesman.isEmpty()) {

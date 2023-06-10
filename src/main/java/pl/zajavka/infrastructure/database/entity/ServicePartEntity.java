@@ -6,6 +6,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = "servicePartId")
 @ToString(of = {"servicePartId", "quantity"})
 @NoArgsConstructor
@@ -21,7 +22,7 @@ public class ServicePartEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "car_service_request_id")
     private CarServiceRequestEntity carServiceRequest;
 
