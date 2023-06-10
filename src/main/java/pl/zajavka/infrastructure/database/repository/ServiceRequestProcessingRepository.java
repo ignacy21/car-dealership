@@ -8,7 +8,6 @@ import pl.zajavka.infrastructure.database.entity.PartEntity;
 import pl.zajavka.infrastructure.database.entity.ServiceMechanicEntity;
 import pl.zajavka.infrastructure.database.entity.ServicePartEntity;
 
-import javax.print.event.PrintEvent;
 import java.util.Objects;
 
 public class ServiceRequestProcessingRepository implements ServiceRequestProcessingDAO {

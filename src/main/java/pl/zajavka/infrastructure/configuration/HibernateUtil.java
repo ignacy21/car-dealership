@@ -25,7 +25,7 @@ public class HibernateUtil {
                     "org.hibernate.hikaricp.internal.HikariCPConnectionProvider"
             ),
             Map.entry(Environment.HBM2DDL_AUTO, "validate"),
-            Map.entry(Environment.GENERATE_STATISTICS, true),
+//            Map.entry(Environment.GENERATE_STATISTICS, true),
             Map.entry(Environment.SHOW_SQL, true),
             Map.entry(Environment.FORMAT_SQL, false)
 //            Map.entry(Environment.USE_SQL_COMMENTS, false)

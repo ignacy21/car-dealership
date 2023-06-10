@@ -2,10 +2,10 @@
 <configuration>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encouter>
+        <encoder>
             <charset>UTF-8</charset>
             <pattern>%-5level %logger{36} - %msg%n</pattern>
-        </encouter>
+        </encoder>
     </appender>
 
     <root level="INFO">

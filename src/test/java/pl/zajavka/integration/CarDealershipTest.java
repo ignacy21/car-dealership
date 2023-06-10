@@ -16,8 +16,8 @@ public class CarDealershipTest {
     private CarDealerShipManagementService carDealerShipManagementService;
     private CarPurchaseService carPurchaseService;
     private CarServiceRequestService carServiceRequestService;
-
     private CarServiceProcessingService carServiceProcessingService;
+    private CarService carService;
 
 
     @BeforeEach
@@ -50,6 +50,7 @@ public class CarDealershipTest {
                         new CarServiceRequestRepository()),
                 new ServiceRequestProcessingRepository()
         );
+        this.carService = new CarService(new CarRepository());
     }
 
     @AfterAll
@@ -97,6 +98,8 @@ public class CarDealershipTest {
     @Order(6)
     void printCarHistory() {
         log.info("### RUNNING ORDER 6");
+        carService.printCarHistory("2C3CDYAG2DH731952");
+        carService.printCarHistory("1GCEC19X27Z109567");
     }
 
 }

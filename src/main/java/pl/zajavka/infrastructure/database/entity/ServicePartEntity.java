@@ -22,7 +22,7 @@ public class ServicePartEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_service_request_id")
     private CarServiceRequestEntity carServiceRequest;
 
