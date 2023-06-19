@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import pl.zajavka.buisness.DAO.ServiceDAO;
-import pl.zajavka.infrastructure.configuration.HibernateUtil;
 import pl.zajavka.infrastructure.database.entity.ServiceEntity;
 
 import java.util.Objects;

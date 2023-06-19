@@ -2,7 +2,6 @@ package pl.zajavka.infrastructure.database.repository;
 
 import org.hibernate.Session;
 import pl.zajavka.buisness.DAO.CarServiceRequestDAO;
-import pl.zajavka.infrastructure.configuration.HibernateUtil;
 import pl.zajavka.infrastructure.database.entity.CarServiceRequestEntity;
 
 import java.util.HashSet;

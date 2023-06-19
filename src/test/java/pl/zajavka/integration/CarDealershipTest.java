@@ -6,7 +6,6 @@ import pl.zajavka.buisness.*;
 import pl.zajavka.buisness.management.CarDealerShipManagementService;
 import pl.zajavka.buisness.management.CarServiceRequestService;
 import pl.zajavka.buisness.management.FileDataPreparationService;
-import pl.zajavka.infrastructure.configuration.HibernateUtil;
 import pl.zajavka.infrastructure.database.repository.*;
 
 @Slf4j
