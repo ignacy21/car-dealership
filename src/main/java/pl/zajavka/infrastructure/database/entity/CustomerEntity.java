@@ -3,7 +3,6 @@ package pl.zajavka.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.zajavka.domain.CarServiceRequest;
 
 import java.util.HashSet;
 import java.util.Objects;

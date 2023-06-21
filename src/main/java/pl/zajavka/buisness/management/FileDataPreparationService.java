@@ -1,65 +1,68 @@
 package pl.zajavka.buisness.management;
 
-import jakarta.persistence.*;
-import pl.zajavka.domain.CarServiceProcessingRequest;
-import pl.zajavka.domain.CarServiceRequest;
-import pl.zajavka.infrastructure.database.entity.*;
+import org.springframework.stereotype.Service;
+import pl.zajavka.domain.*;
 
-import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static pl.zajavka.buisness.management.Keys.Constants.WHAT;
-import static pl.zajavka.buisness.management.Keys.Entity.*;
+import static pl.zajavka.buisness.management.Keys.Domain.*;
 import static pl.zajavka.buisness.management.Keys.InputDataGroup.*;
 
+@Service
 public class FileDataPreparationService {
 
-    public List<?> prepareInitData() {
-
-        List<SalesmanEntity> salesman = InputDataCache
-                .getInputData(INIT, SALESMAN, InputDataMapper::mapSalesman);
-
-        List<MechanicEntity> mechanics = InputDataCache
-                .getInputData(INIT, MECHANIC, InputDataMapper::mapMechanic);
-
-        List<CarToBuyEntity> cars = InputDataCache
-                .getInputData(INIT, CAR, InputDataMapper::mapCarToBuy);
-
-        List<ServiceEntity> services = InputDataCache
-                .getInputData(INIT, SERVICE, InputDataMapper::mapService);
-
-        List<PartEntity> parts = InputDataCache
-                .getInputData(INIT, PART, InputDataMapper::mapPart);
-
-
-        List<?> list = Stream.of(salesman, mechanics, cars, services, parts)
-                .flatMap(Collection::stream)
+    public List<CarPurchaseRequestInputData> prepareFirstTimePurchaseData() {
+        return InputDataCache.getInputData(BUY_FIRST_TIME, this::prepareMap).stream()
+                .map(this::prepareFirstTimePurchaseData)
                 .toList();
-        return list;
     }
 
-    public List<Map<String, List<String>>> prepareFirstTimePurchaseData() {
-        return InputDataCache.getInputData(BUY_FIRST_TIME, this::prepareMap);
+    public List<CarPurchaseRequestInputData> prepareSecondTimePurchaseData() {
+        return InputDataCache.getInputData(BUY_AGAIN, this::prepareMap).stream()
+                .map(this::prepareSecondTimePurchaseData)
+                .toList();
     }
 
-    public List<Map<String, List<String>>> prepareSecondTimePurchaseData() {
-        return InputDataCache.getInputData(BUY_AGAIN, this::prepareMap);
+    private CarPurchaseRequestInputData prepareFirstTimePurchaseData(Map<String, List<String>> inputData) {
+        List<String> customerData = inputData.get(CUSTOMER.toString());
+        List<String> carData = inputData.get(CAR.toString());
+        List<String> salesmanData = inputData.get(SALESMAN.toString());
+        return CarPurchaseRequestInputData.builder()
+                .customerName(customerData.get(0))
+                .customerSurname(customerData.get(1))
+                .customerPhone(customerData.get(2))
+                .customerEmail(customerData.get(3))
+                .customerAddressCountry(customerData.get(4))
+                .customerAddressCity(customerData.get(5))
+                .customerAddressPostalCode(customerData.get(6))
+                .customerAddressStreet(customerData.get(7))
+                .carVin(carData.get(0))
+                .salesmanPesel(salesmanData.get(0))
+                .build();
     }
 
-    public static CustomerEntity buildCustomerEntity(List<String> inputData, InvoiceEntity invoice) {
-        return CustomerEntity.builder()
-                .name(inputData.get(0))
-                .surname(inputData.get(1))
-                .phone(inputData.get(2))
-                .email(inputData.get(3))
-                .address(AddressEntity.builder()
-                        .country(inputData.get(4))
-                        .city(inputData.get(5))
-                        .postalCode(inputData.get(6))
-                        .address(inputData.get(7))
+    private CarPurchaseRequestInputData prepareSecondTimePurchaseData(Map<String, List<String>> inputData) {
+        return CarPurchaseRequestInputData.builder()
+                .customerEmail(inputData.get(CUSTOMER.toString()).get(0))
+                .carVin(inputData.get(CAR.toString()).get(0))
+                .salesmanPesel(inputData.get(SALESMAN.toString()).get(0))
+                .build();
+    }
+
+    public static Customer buildCustomer(CarPurchaseRequestInputData inputData, Invoice invoice) {
+        return Customer.builder()
+                .name(inputData.getCustomerName())
+                .surname(inputData.getCustomerSurname())
+                .phone(inputData.getCustomerPhone())
+                .email(inputData.getCustomerEmail())
+                .address(Address.builder()
+                        .country(inputData.getCustomerAddressCountry())
+                        .city(inputData.getCustomerAddressCity())
+                        .postalCode(inputData.getCustomerAddressPostalCode())
+                        .address(inputData.getCustomerAddressStreet())
                         .build())
                 .invoices(Set.of(invoice))
                 .build();
@@ -79,32 +82,18 @@ public class FileDataPreparationService {
                 .build();
     }
 
-    private CarServiceRequest.Car createCar(List<String> inputData) {
+    private Customer createCustomer(List<String> inputData) {
         if (inputData.size() == 1) {
-            return CarServiceRequest.Car.builder()
-                    .vin(inputData.get(0))
-                    .build();
-        }
-        return CarServiceRequest.Car.builder()
-                .vin(inputData.get(0))
-                .brand(inputData.get(1))
-                .model(inputData.get(2))
-                .year(Integer.valueOf(inputData.get(3)))
-                .build();
-    }
-
-    private CarServiceRequest.Customer createCustomer(List<String> inputData) {
-        if (inputData.size() == 1) {
-            return CarServiceRequest.Customer.builder()
+            return Customer.builder()
                     .email(inputData.get(0))
                     .build();
         }
-        return CarServiceRequest.Customer.builder()
+        return Customer.builder()
                 .name(inputData.get(0))
                 .surname(inputData.get(1))
                 .phone(inputData.get(2))
                 .email(inputData.get(3))
-                .address(CarServiceRequest.Address.builder()
+                .address(Address.builder()
                         .country(inputData.get(4))
                         .city(inputData.get(5))
                         .postalCode(inputData.get(6))
@@ -113,15 +102,29 @@ public class FileDataPreparationService {
                 .build();
     }
 
-    public List<CarServiceProcessingRequest> prepareServiceRequestToProcess() {
+    private CarToService createCar(List<String> inputData) {
+        if (inputData.size() == 1) {
+            return CarToService.builder()
+                    .vin(inputData.get(0))
+                    .build();
+        }
+        return CarToService.builder()
+                .vin(inputData.get(0))
+                .brand(inputData.get(1))
+                .model(inputData.get(2))
+                .year(Integer.valueOf(inputData.get(3)))
+                .build();
+    }
+
+    public List<CarServiceProcessingInputData> prepareServiceRequestToProcess() {
         return InputDataCache.getInputData(DO_THE_SERVICE, this::prepareMap).stream()
                 .map(this::createCarServiceRequestToProcess)
                 .toList();
     }
 
-    private CarServiceProcessingRequest createCarServiceRequestToProcess(Map<String, List<String>> inputData) {
+    private CarServiceProcessingInputData createCarServiceRequestToProcess(Map<String, List<String>> inputData) {
         List<String> whats = inputData.get(WHAT.name());
-        return CarServiceProcessingRequest.builder()
+        return CarServiceProcessingInputData.builder()
                 .mechanicPesel(inputData.get(MECHANIC.name()).get(0))
                 .carVin(inputData.get(CAR.name()).get(0))
                 .partSerialNumber(Optional.ofNullable(whats.get(0)).filter(v -> !v.isBlank()).orElse(null))

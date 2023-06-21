@@ -3,8 +3,7 @@ package pl.zajavka.integration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import pl.zajavka.buisness.*;
-import pl.zajavka.buisness.management.CarDealerShipManagementService;
-import pl.zajavka.buisness.management.CarServiceRequestService;
+import pl.zajavka.buisness.CarServiceRequestService;
 import pl.zajavka.buisness.management.FileDataPreparationService;
 import pl.zajavka.infrastructure.database.repository.*;
 
