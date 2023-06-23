@@ -30,6 +30,10 @@ dependencies {
     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    // mapstruct
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
     // spring
     testImplementation "org.springframework:spring-test:$springVersion"
 
@@ -58,7 +62,7 @@ dependencies {
     implementation "org.ehcache:ehcache:$ehcacheVersion"
 
     // flyway
-    implementation "org.flywaydb:flyway-core:$flywayVersion";
+    implementation "org.flywaydb:flyway-core:$flywayVersion"
 
     //
     implementation "javax.xml.bind:jaxb-api:$jaxbApiVersion"

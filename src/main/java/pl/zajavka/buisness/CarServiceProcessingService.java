@@ -1,5 +1,6 @@
 package pl.zajavka.buisness;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import pl.zajavka.buisness.DAO.ServiceRequestProcessingDAO;
 import pl.zajavka.buisness.management.FileDataPreparationService;
@@ -22,7 +23,7 @@ public class CarServiceProcessingService {
     private final CarServiceRequestService carServiceRequestService;
     private final ServiceRequestProcessingDAO serviceRequestProcessingDAO;
 
-
+    @Transactional
     public void process() {
         List<CarServiceProcessingInputData> toProcess = fileDataPreparationService.prepareServiceRequestToProcess();
         toProcess.forEach(this::processRequest);

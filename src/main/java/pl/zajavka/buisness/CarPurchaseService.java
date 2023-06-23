@@ -1,5 +1,6 @@
 package pl.zajavka.buisness;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import pl.zajavka.buisness.management.FileDataPreparationService;
 import pl.zajavka.domain.*;
@@ -16,6 +17,7 @@ public class CarPurchaseService {
     private final CarService carService;
     private final SalesmanService salesmanService;
 
+    @Transactional
     public void purchase() {
         var firstTimePurchaseData = fileDataPreparationService.prepareFirstTimePurchaseData();
         var secondTimePurchaseData = fileDataPreparationService.prepareSecondTimePurchaseData();

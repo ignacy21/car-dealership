@@ -1,5 +1,6 @@
 package pl.zajavka.buisness;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import pl.zajavka.buisness.DAO.CustomerDAO;
 import pl.zajavka.domain.Address;
@@ -12,10 +13,12 @@ public class CustomerService {
 
     private final CustomerDAO customerDAO;
 
+    @Transactional
     public void issueInvoice(Customer customer) {
         customerDAO.issueInvoice(customer);
     }
 
+    @Transactional
     public Customer findCustomer(String email) {
         Optional<Customer> customer = customerDAO.findByEmail(email);
         if (customer.isEmpty()) {
@@ -24,24 +27,13 @@ public class CustomerService {
         return customer.get();
     }
 
+    @Transactional
     public void saveServiceRequest(Customer customer) {
         customerDAO.saveServiceRequest(customer);
     }
 
+    @Transactional
     public Customer saveCustomer(Customer customer) {
-        Customer customer1 = Customer.builder()
-                .name(customer.getName())
-                .surname(customer.getSurname())
-                .phone(customer.getPhone())
-                .email(customer.getEmail())
-                .address(Address.builder()
-                        .country(customer.getAddress().getCountry())
-                        .city(customer.getAddress().getCity())
-                        .postalCode(customer.getAddress().getPostalCode())
-                        .address(customer.getAddress().getAddress())
-                        .build())
-                .build();
-
-        return customerDAO.saveCustomer();
+        return customerDAO.saveCustomer(customer);
     }
 }

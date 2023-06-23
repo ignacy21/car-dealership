@@ -1,4 +1,4 @@
 package pl.zajavka.infrastructure;
 
-public class ComponentScanMarker {
+public interface ComponentScanMarker {
 }

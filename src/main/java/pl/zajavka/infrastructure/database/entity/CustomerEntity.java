@@ -4,8 +4,6 @@ package pl.zajavka.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 
@@ -36,7 +34,7 @@ public class CustomerEntity {
     @Column(name = "email", unique = true)
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
@@ -46,11 +44,5 @@ public class CustomerEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
     private Set<CarServiceRequestEntity> carServiceRequests;
 
-    public void addServiceRequest(CarServiceRequestEntity carServiceRequestEntity) {
-        if (Objects.isNull(carServiceRequests)) {
-            this.carServiceRequests = new HashSet<>();
-        }
-        carServiceRequests.add(carServiceRequestEntity);
-    }
 }
 

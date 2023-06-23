@@ -1,5 +1,6 @@
 package pl.zajavka.buisness;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import pl.zajavka.buisness.DAO.CarServiceRequestDAO;
 import pl.zajavka.buisness.management.FileDataPreparationService;
@@ -23,8 +24,8 @@ public class CarServiceRequestService {
     private final CustomerService customerService;
     private final CarServiceRequestDAO carServiceRequestDAO;
 
+    @Transactional
     public void requestService() {
-
         Map<Boolean, List<CarServiceRequest>> serviceRequests = fileDataPreparationService.createCarServiceRequests().stream()
                 .collect(Collectors.groupingBy(e -> e.getCar().carBoughtHere()));
 
@@ -71,11 +72,6 @@ public class CarServiceRequestService {
         );
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private int randomInt(int min, int max) {
-        return new Random().nextInt(max - min) + min;
-    }
-
     private CarToService findInCarToBuyAndSaveInCarToService(CarToService car) {
         CarToBuy carToBuy = carService.findCarToBuy(car.getVin());
         return carService.saveCarToService(carToBuy);
@@ -91,6 +87,12 @@ public class CarServiceRequestService {
         customerService.saveServiceRequest(customer);
     }
 
+    @SuppressWarnings("SameParameterValue")
+    private int randomInt(int min, int max) {
+        return new Random().nextInt(max - min) + min;
+    }
+
+    @Transactional
     public CarServiceRequest findAnyActiveRequests(String carVin) {
         Set<CarServiceRequest> serviceRequests = carServiceRequestDAO.findActiveServiceRequestsByCarVin(carVin);
         if (serviceRequests.size() != 1) {
