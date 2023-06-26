@@ -7,7 +7,7 @@ import pl.zajavka.infrastructure.ComponentScanMarker;
 
 @Configuration
 @ComponentScan(basePackageClasses = ComponentScanMarker.class)
-@Import({PersistenceJPAConfiguration.class})
+@Import(PersistenceJPAConfiguration.class)
 public class ApplicationConfiguration {
 
 }
