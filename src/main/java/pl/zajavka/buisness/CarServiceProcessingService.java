@@ -1,6 +1,5 @@
 package pl.zajavka.buisness;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import pl.zajavka.buisness.DAO.ServiceRequestProcessingDAO;
 import pl.zajavka.buisness.management.FileDataPreparationService;
@@ -12,6 +11,7 @@ import java.util.Objects;
 
 import static pl.zajavka.buisness.management.Keys.Constants.FINISHED;
 
+@org.springframework.stereotype.Service
 @AllArgsConstructor
 public class CarServiceProcessingService {
 
@@ -23,7 +23,6 @@ public class CarServiceProcessingService {
     private final CarServiceRequestService carServiceRequestService;
     private final ServiceRequestProcessingDAO serviceRequestProcessingDAO;
 
-    @Transactional
     public void process() {
         List<CarServiceProcessingInputData> toProcess = fileDataPreparationService.prepareServiceRequestToProcess();
         toProcess.forEach(this::processRequest);

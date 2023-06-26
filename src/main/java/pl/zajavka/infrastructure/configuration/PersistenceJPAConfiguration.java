@@ -1,5 +1,7 @@
 package pl.zajavka.infrastructure.configuration;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.AllArgsConstructor;
 import org.flywaydb.core.Flyway;
@@ -17,6 +19,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.zajavka.infrastructure.database.entity._EntityMarker;
 import pl.zajavka.infrastructure.database.repository.jpa._JpaRepositoriesMarker;
 
@@ -28,39 +31,10 @@ import java.util.Properties;
 @AllArgsConstructor
 @EnableJpaRepositories(basePackageClasses = _JpaRepositoriesMarker.class)
 @PropertySource({"classpath:database.properties"})
+@EnableTransactionManagement
 public class PersistenceJPAConfiguration {
 
-//    private static final Map<String, Object> SETTINGS = Map.ofEntries(
-//            Map.entry(Environment.DRIVER, "org.postgresql.Driver"),
-//            Map.entry(
-//                    Environment.CONNECTION_PROVIDER,
-//                    "org.hibernate.hikaricp.internal.HikariCPConnectionProvider"
-//            ),
-//            Map.entry(Environment.HBM2DDL_AUTO, "validate"),
-//            Map.entry(Environment.SHOW_SQL, true),
-//            Map.entry(Environment.FORMAT_SQL, false)
-////            Map.entry(Environment.GENERATE_STATISTICS, true),
-////            Map.entry(Environment.USE_SQL_COMMENTS, false)
-//    );
-//
-//    private static final Map<String, Object> HIKARI_CP_SETTINGS = Map.ofEntries(
-//            Map.entry("hibernate.hikari.connectionTimeout", "20000"),
-//            Map.entry("hibernate.hikari.minimumIdle", "20"),
-//            Map.entry("hibernate.hikari.maximumPoolSize", "20"),
-//            Map.entry("hibernate.hikari.idleTimeout", "300000")
-//    );
-
     private final org.springframework.core.env.Environment environment;
-
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("jdbc.driverClassName")));
-        dataSource.setUrl(environment.getProperty("jdbc.url"));
-        dataSource.setUrl(environment.getProperty("jdbc.user"));
-        dataSource.setUrl(environment.getProperty("jdbc.pass"));
-        return dataSource;
-    }
 
     @Bean
     @DependsOn("flyway")
@@ -84,9 +58,9 @@ public class PersistenceJPAConfiguration {
 
     @Bean
     public PlatformTransactionManager transactionManager(final EntityManagerFactory entityManagerFactory) {
-         final JpaTransactionManager transactionManager = new JpaTransactionManager();
-         transactionManager.setEntityManagerFactory(entityManagerFactory);
-         return transactionManager;
+        final JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory);
+        return transactionManager;
     }
 
     @Bean
@@ -101,5 +75,26 @@ public class PersistenceJPAConfiguration {
         configuration.setLocations(new Location("filesystem:src/main/resources/flyway/migrations"));
         configuration.setDataSource(dataSource());
         return new Flyway(configuration);
+    }
+
+//    @Bean(destroyMethod = "close")
+    @Bean
+    public DataSource dataSource() {
+//        HikariConfig hikariConfig = new HikariConfig();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("jdbc.driverClassName")));
+        dataSource.setUrl(environment.getProperty("jdbc.url"));
+        dataSource.setUsername(environment.getProperty("jdbc.user"));
+        dataSource.setPassword(environment.getProperty("jdbc.pass"));
+
+//        hikariConfig.setConnectionTestQuery("SELECT 1");
+//        hikariConfig.setPoolName("springHikariCP");
+
+//        hikariConfig.setMaximumPoolSize(20);
+//        hikariConfig.setConnectionTimeout(20_000);
+//        hikariConfig.setMinimumIdle(10);
+//        hikariConfig.setIdleTimeout(300_000);
+//        return new HikariDataSource(hikariConfig);
+        return dataSource;
     }
 }

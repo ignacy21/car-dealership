@@ -1,7 +1,8 @@
 package pl.zajavka.buisness;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.zajavka.buisness.DAO.CarServiceRequestDAO;
 import pl.zajavka.buisness.management.FileDataPreparationService;
 import pl.zajavka.domain.CarServiceRequest;
@@ -16,6 +17,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 @AllArgsConstructor
 public class CarServiceRequestService {
 
@@ -24,7 +26,6 @@ public class CarServiceRequestService {
     private final CustomerService customerService;
     private final CarServiceRequestDAO carServiceRequestDAO;
 
-    @Transactional
     public void requestService() {
         Map<Boolean, List<CarServiceRequest>> serviceRequests = fileDataPreparationService.createCarServiceRequests().stream()
                 .collect(Collectors.groupingBy(e -> e.getCar().carBoughtHere()));
@@ -42,7 +43,7 @@ public class CarServiceRequestService {
         CarServiceRequest carServiceRequest = buildCarService(request, car, customer);
         Set<CarServiceRequest> existingCarServiceRequests = customer.getCarServiceRequests();
         existingCarServiceRequests.add(carServiceRequest);
-        customerService.saveServiceRequest(customer);
+        customerService.saveServiceRequest(customer.withCarServiceRequests(existingCarServiceRequests));
     }
 
     private CarServiceRequest buildCarService(
@@ -84,7 +85,7 @@ public class CarServiceRequestService {
         CarServiceRequest carServiceRequest = buildCarService(request, car, customer);
         Set<CarServiceRequest> existingCarServiceRequests = customer.getCarServiceRequests();
         existingCarServiceRequests.add(carServiceRequest);
-        customerService.saveServiceRequest(customer);
+        customerService.saveServiceRequest(customer.withCarServiceRequests(existingCarServiceRequests));
     }
 
     @SuppressWarnings("SameParameterValue")

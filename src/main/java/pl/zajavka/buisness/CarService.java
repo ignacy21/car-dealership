@@ -1,8 +1,10 @@
 package pl.zajavka.buisness;
 
-import jakarta.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.buisness.DAO.CarToBuyDAO;
 import pl.zajavka.buisness.DAO.CarToServiceDAO;
 import pl.zajavka.domain.CarHistory;
@@ -12,15 +14,16 @@ import pl.zajavka.domain.CarToService;
 import java.util.Optional;
 
 @Slf4j
+@Service
 @AllArgsConstructor
 public class CarService {
 
-    private final CarToServiceDAO carToServiceDAO;
     private final CarToBuyDAO carToBuyDAO;
+    private final CarToServiceDAO carToServiceDAO;
 
     @Transactional
     public CarToBuy findCarToBuy(String vin) {
-        Optional<CarToBuy> carToBuyVin = carToBuyDAO.findCarToBuyVin(vin);
+        Optional<CarToBuy> carToBuyVin = carToBuyDAO.findCarToBuyByVin(vin);
         if (carToBuyVin.isEmpty()) {
             throw new RuntimeException("Could not find car by vin: [%s]".formatted(vin));
         }

@@ -3,7 +3,6 @@ package pl.zajavka.infrastructure.database.repository.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-
 import pl.zajavka.domain.CarHistory;
 import pl.zajavka.domain.CarToService;
 import pl.zajavka.domain.Part;
@@ -11,8 +10,6 @@ import pl.zajavka.domain.Service;
 import pl.zajavka.infrastructure.database.entity.CarToServiceEntity;
 import pl.zajavka.infrastructure.database.entity.ServiceMechanicEntity;
 import pl.zajavka.infrastructure.database.entity.ServicePartEntity;
-
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CarToServiceEntityMapper {

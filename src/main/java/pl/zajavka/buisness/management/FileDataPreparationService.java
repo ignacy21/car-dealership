@@ -20,6 +20,7 @@ public class FileDataPreparationService {
                 .toList();
     }
 
+
     public List<CarPurchaseRequestInputData> prepareSecondTimePurchaseData() {
         return InputDataCache.getInputData(BUY_AGAIN, this::prepareMap).stream()
                 .map(this::prepareSecondTimePurchaseData)
@@ -28,8 +29,6 @@ public class FileDataPreparationService {
 
     private CarPurchaseRequestInputData prepareFirstTimePurchaseData(Map<String, List<String>> inputData) {
         List<String> customerData = inputData.get(CUSTOMER.toString());
-        List<String> carData = inputData.get(CAR.toString());
-        List<String> salesmanData = inputData.get(SALESMAN.toString());
         return CarPurchaseRequestInputData.builder()
                 .customerName(customerData.get(0))
                 .customerSurname(customerData.get(1))
@@ -39,10 +38,11 @@ public class FileDataPreparationService {
                 .customerAddressCity(customerData.get(5))
                 .customerAddressPostalCode(customerData.get(6))
                 .customerAddressStreet(customerData.get(7))
-                .carVin(carData.get(0))
-                .salesmanPesel(salesmanData.get(0))
+                .carVin(inputData.get(CAR.toString()).get(0))
+                .salesmanPesel(inputData.get(SALESMAN.toString()).get(0))
                 .build();
     }
+
 
     private CarPurchaseRequestInputData prepareSecondTimePurchaseData(Map<String, List<String>> inputData) {
         return CarPurchaseRequestInputData.builder()

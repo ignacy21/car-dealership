@@ -2,9 +2,6 @@ plugins {
     id 'java'
 }
 
-
-
-
 repositories {
     mavenCentral()
 }
@@ -68,7 +65,9 @@ dependencies {
     implementation "javax.xml.bind:jaxb-api:$jaxbApiVersion"
     implementation "com.sun.xml.bind:jaxb-impl:$jaxbApiVersion"
 
-
+    // testcontainers
+    testImplementation "org.testcontainers:junit-jupiter:$testContainersVersion"
+    testImplementation "org.testcontainers:postgresql:$testContainersVersion"
 
 }
 

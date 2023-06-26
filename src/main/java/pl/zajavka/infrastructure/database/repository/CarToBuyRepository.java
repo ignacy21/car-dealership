@@ -17,7 +17,7 @@ public class CarToBuyRepository implements CarToBuyDAO {
     private final CarToBuyEntityMapper carToBuyEntityMapper;
 
     @Override
-    public Optional<CarToBuy> findCarToBuyVin(String vin) {
+    public Optional<CarToBuy> findCarToBuyByVin(String vin) {
         return carToBuyJpaRepository.findByVin(vin)
                 .map(carToBuyEntityMapper::mapFromEntity);
     }

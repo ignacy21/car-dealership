@@ -1,12 +1,14 @@
 package pl.zajavka.buisness;
 
-import jakarta.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.buisness.DAO.ServiceDAO;
 import pl.zajavka.domain.Service;
 
 import java.util.Optional;
 
+@org.springframework.stereotype.Service
 @AllArgsConstructor
 public class ServiceCatalogService {
 
