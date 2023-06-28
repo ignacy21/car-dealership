@@ -3,7 +3,6 @@ package pl.zajavka.buisness.management;
 public interface Keys {
 
     enum InputDataGroup {
-
         BUY_FIRST_TIME,
         BUY_AGAIN,
         SERVICE_REQUEST,

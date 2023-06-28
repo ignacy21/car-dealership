@@ -1,4 +1,4 @@
-package pl.zajavka.infrastructure;
+package pl.zajavka;
 
 public interface ComponentScanMarker {
 }

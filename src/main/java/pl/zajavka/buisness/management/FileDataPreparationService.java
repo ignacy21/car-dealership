@@ -77,9 +77,9 @@ public class FileDataPreparationService {
 
     private CarServiceRequest createCarServiceRequest(Map<String, List<String>> inputData) {
         return CarServiceRequest.builder()
-                .customer(createCustomer(inputData.get(CUSTOMER.name())))
-                .car(createCar(inputData.get(CAR.name())))
-                .customerComment(inputData.get(WHAT.name()).get(0))
+                .customer(createCustomer(inputData.get(CUSTOMER.toString())))
+                .car(createCar(inputData.get(CAR.toString())))
+                .customerComment(inputData.get(WHAT.toString()).get(0))
                 .build();
     }
 
@@ -117,6 +117,7 @@ public class FileDataPreparationService {
                 .build();
     }
 
+
     public List<CarServiceProcessingInputData> prepareServiceRequestToProcess() {
         return InputDataCache.getInputData(DO_THE_SERVICE, this::prepareMap).stream()
                 .map(this::createCarServiceRequestToProcess)
@@ -124,10 +125,10 @@ public class FileDataPreparationService {
     }
 
     private CarServiceProcessingInputData createCarServiceRequestToProcess(Map<String, List<String>> inputData) {
-        List<String> whats = inputData.get(WHAT.name());
+        List<String> whats = inputData.get(WHAT.toString());
         return CarServiceProcessingInputData.builder()
-                .mechanicPesel(inputData.get(MECHANIC.name()).get(0))
-                .carVin(inputData.get(CAR.name()).get(0))
+                .mechanicPesel(inputData.get(MECHANIC.toString()).get(0))
+                .carVin(inputData.get(CAR.toString()).get(0))
                 .partSerialNumber(Optional.ofNullable(whats.get(0)).filter(v -> !v.isBlank()).orElse(null))
                 .partQuantity(Optional.ofNullable(whats.get(1)).filter(v -> !v.isBlank()).map(Integer::parseInt).orElse(null))
                 .serviceCode(whats.get(2))

@@ -26,17 +26,17 @@ public class InputDataCache {
     }
 
     private static Map<String, List<String>> readFileContent() throws IOException {
-        Path path = ResourceUtils.getFile("classpath:car-dealership-traffic-simulation.md").toPath();
-        List<String> list = Files.readAllLines(path).stream()
+        Path path = ResourceUtils.getFile("classpath:car_dealership-traffic-simulation.md").toPath();
+        List<String> lines = Files.readAllLines(path).stream()
                 .filter(line -> !line.startsWith("[//]: #"))
                 .filter(line -> !line.isBlank())
                 .toList();
 
-        return list.stream()
+        return lines.stream()
                 .collect(Collectors.groupingBy(
                         line -> line.split("->")[0].trim(),
                         Collectors.mapping(
-                                line -> line.substring(line.indexOf("->") + 3).trim(),
+                                line -> line.substring(line.indexOf("->") + 2).trim(),
                                 Collectors.toList()
                         )
                 ));
