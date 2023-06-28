@@ -20,8 +20,7 @@ public interface CarToServiceJpaRepository extends JpaRepository<CarToServiceEnt
                     "carServiceRequests",
                     "carServiceRequests.serviceMechanics",
                     "carServiceRequests.serviceMechanics.service",
-                    "carServiceRequests.serviceParts.part",
-
+                    "carServiceRequests.serviceParts.part"
             }
     )
     Optional<CarToServiceEntity> findCarHistoryByVin(String vin);

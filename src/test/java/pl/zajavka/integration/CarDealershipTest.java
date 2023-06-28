@@ -37,7 +37,6 @@ public class CarDealershipTest {
 
     @Container
     static PostgreSQLContainer<?> POSTGRESQL_CONTAINER = new PostgreSQLContainer<>("postgres:alpine");
-    // docker run --name postgres-1 -e POSTGRES_PASSWORD=postgresql -d -p 5432:5432 postgres:alpine
 
     @DynamicPropertySource
     @SuppressWarnings("unused")
