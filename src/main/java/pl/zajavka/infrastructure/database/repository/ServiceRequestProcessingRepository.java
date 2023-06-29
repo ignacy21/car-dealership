@@ -56,7 +56,7 @@ public class ServiceRequestProcessingRepository implements ServiceRequestProcess
             ServicePart servicePart
     ) {
         PartEntity partEntity = partJpaRepository.findById(servicePart.getPart().getPartId()).orElseThrow();
-        ServicePartEntity servicePartEntity = servicePartEntityMapper.mapToEntity(partEntity);
+        ServicePartEntity servicePartEntity = servicePartEntityMapper.mapToEntity(servicePart);
         servicePartEntity.setPart(partEntity);
         servicePartJpaRepository.saveAndFlush(servicePartEntity);
         process(serviceRequest, serviceMechanic);

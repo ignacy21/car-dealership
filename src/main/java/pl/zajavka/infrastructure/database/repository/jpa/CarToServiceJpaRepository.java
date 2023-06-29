@@ -20,6 +20,7 @@ public interface CarToServiceJpaRepository extends JpaRepository<CarToServiceEnt
                     "carServiceRequests",
                     "carServiceRequests.serviceMechanics",
                     "carServiceRequests.serviceMechanics.service",
+                    "carServiceRequests.serviceParts",
                     "carServiceRequests.serviceParts.part"
             }
     )
