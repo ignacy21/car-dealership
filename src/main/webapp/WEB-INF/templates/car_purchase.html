@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -26,7 +27,30 @@
     <p>The best place to buy a car is Zajavka Car!</p>
     <p>Please take a look at available cars!</p>
 
-
+    <div>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>Vin</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="car : ${availableCarsDTOs}">
+                <td th:text="${car.vin}"></td>
+                <td th:text="${car.brand}"></td>
+                <td th:text="${car.model}"></td>
+                <td th:text="${car.year}"></td>
+                <td th:text="${car.color}"></td>
+                <td th:text="${car.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
     <div class="container">
