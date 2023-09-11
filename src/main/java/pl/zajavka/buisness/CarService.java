@@ -11,6 +11,7 @@ import pl.zajavka.domain.CarHistory;
 import pl.zajavka.domain.CarToBuy;
 import pl.zajavka.domain.CarToService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -20,6 +21,13 @@ public class CarService {
 
     private final CarToBuyDAO carToBuyDAO;
     private final CarToServiceDAO carToServiceDAO;
+
+    @Transactional
+    public List<CarToBuy> finAvailableCars() {
+        List<CarToBuy> availableCars = carToBuyDAO.findAvailable();
+        log.info("Available cars [{}]", availableCars.size());
+        return availableCars;
+    }
 
     @Transactional
     public CarToBuy findCarToBuy(String vin) {

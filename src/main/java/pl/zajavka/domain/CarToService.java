@@ -9,7 +9,7 @@ import java.util.Set;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = "carToServiceId")
+@EqualsAndHashCode(of = "vin")
 @ToString(of = {"carToServiceId", "vin", "brand", "model", "year"})
 public class CarToService {
 
