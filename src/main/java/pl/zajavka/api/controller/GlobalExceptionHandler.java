@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import pl.zajavka.domain.exception.ProcessingException;
 
 @Slf4j
 @ControllerAdvice
@@ -15,6 +16,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ModelAndView handlerException(Exception ex) {
         String message = "Unexpected exception occurred: [%s]".formatted(ex.getMessage());
+        log.error(message, ex);
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("errorMessage", message);
+        return modelAndView;
+    }
+
+    @ExceptionHandler(ProcessingException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ModelAndView processingException(ProcessingException ex) {
+        String message = "Processing exception occurred: [%s]".formatted(ex.getMessage());
         log.error(message, ex);
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("errorMessage", message);
