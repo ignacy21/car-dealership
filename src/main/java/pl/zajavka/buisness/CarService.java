@@ -11,6 +11,7 @@ import pl.zajavka.domain.CarHistory;
 import pl.zajavka.domain.CarToBuy;
 import pl.zajavka.domain.CarToService;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,16 +57,13 @@ public class CarService {
         return carToServiceDAO.saveCarToService(car);
     }
 
-    public void printCarHistory(String vin) {
-        CarHistory carHistoryByVin = carToServiceDAO.findCarHistoryByVin(vin);
-        log.info("###CAR HISTORY FOR VIN: [{}]", vin);
-        carHistoryByVin.getCarServiceRequests().forEach(this::printServiceRequest);
+    public Collection<CarToService> findAllCarsWithHistory() {
+        List<CarToService> allCars = carToServiceDAO.findAll();
+        log.info("Cars to show history: [{}]", allCars.size());
+        return allCars;
     }
 
-    void printServiceRequest(CarHistory.CarServiceRequest serviceRequest) {
-        log.info("###SERVICE REQUEST: [{}]", serviceRequest);
-        serviceRequest.getServices().forEach(service -> log.info("###SERVICE: [{}]", service));
-        serviceRequest.getParts().forEach(part -> log.info("###PART: [{}]", part));
-
+    public CarHistory findCarHistoryByVin(String carVin) {
+        return carToServiceDAO.findCarHistoryByVin(carVin);
     }
 }

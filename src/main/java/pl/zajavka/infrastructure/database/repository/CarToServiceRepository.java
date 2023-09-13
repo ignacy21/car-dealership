@@ -9,6 +9,7 @@ import pl.zajavka.infrastructure.database.entity.CarToServiceEntity;
 import pl.zajavka.infrastructure.database.repository.jpa.CarToServiceJpaRepository;
 import pl.zajavka.infrastructure.database.repository.mapper.CarToServiceEntityMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -35,5 +36,12 @@ public class CarToServiceRepository implements CarToServiceDAO {
     public CarHistory findCarHistoryByVin(String vin) {
         CarToServiceEntity carHistoryByVin = carToServiceJpaRepository.findCarHistoryByVin(vin).orElseThrow();
         return carToServiceEntityMapper.mapFromEntity(vin, carHistoryByVin);
+    }
+
+    @Override
+    public List<CarToService> findAll() {
+        return carToServiceJpaRepository.findAll().stream()
+                .map(carToServiceEntityMapper::mapFromEntity)
+                .toList();
     }
 }

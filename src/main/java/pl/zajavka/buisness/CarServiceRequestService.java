@@ -17,14 +17,18 @@ import java.util.Set;
 @AllArgsConstructor
 public class CarServiceRequestService {
 
-
     private final MechanicService mechanicService;
+
     private final CarService carService;
     private final CustomerService customerService;
     private final CarServiceRequestDAO carServiceRequestDAO;
 
     public List<Mechanic> availableMechanics() {
         return mechanicService.findAvailableMechanics();
+    }
+
+    public Collection<CarServiceRequest> availableServiceRequests() {
+        return carServiceRequestDAO.findAvailable();
     }
 
     @Transactional
