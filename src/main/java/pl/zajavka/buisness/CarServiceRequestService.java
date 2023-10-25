@@ -1,5 +1,6 @@
 package pl.zajavka.buisness;
 
+import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,12 +117,12 @@ public class CarServiceRequestService {
     public CarServiceRequest findAnyActiveRequests(String carVin) {
         Set<CarServiceRequest> serviceRequests = carServiceRequestDAO.findActiveServiceRequestsByCarVin(carVin);
         if (serviceRequests.size() != 1) {
-            throw new RuntimeException(
+            throw new NotFoundException(
                     "There should be only one active service request at a time, car vin: [%s]".formatted(carVin));
         }
         return serviceRequests.stream()
                 .findAny()
-                .orElseThrow(() -> new RuntimeException(
+                .orElseThrow(() -> new NotFoundException(
                         "Could not find any service requests, car vin: [%s]".formatted(carVin)));
     }
 }

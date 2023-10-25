@@ -1,13 +1,13 @@
 package pl.zajavka.buisness;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.buisness.DAO.PartDAO;
 import pl.zajavka.domain.Part;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ public class PartCatalogService {
     public Part findPart(String partSerialNumber) {
         Optional<Part> part = partDAO.findBySerialNumber(partSerialNumber);
         if (part.isEmpty()) {
-            throw new RuntimeException("Could not find part by serial number: [%s]".formatted(partSerialNumber));
+            throw new NotFoundException("Could not find part by serial number: [%s]".formatted(partSerialNumber));
         }
         return part.get();
     }

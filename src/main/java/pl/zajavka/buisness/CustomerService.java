@@ -1,5 +1,6 @@
 package pl.zajavka.buisness;
 
+import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class CustomerService {
     public Customer findCustomer(String email) {
         Optional<Customer> customer = customerDAO.findByEmail(email);
         if (customer.isEmpty()) {
-            throw new RuntimeException("Could not find customer by email: [%s]".formatted(email));
+            throw new NotFoundException("Could not find customer by email: [%s]".formatted(email));
         }
         return customer.get();
     }

@@ -8,7 +8,6 @@ import pl.zajavka.infrastructure.database.entity.CarToBuyEntity;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.DoubleStream;
 
 @Repository
 public interface CarToBuyJpaRepository extends JpaRepository<CarToBuyEntity, Integer> {

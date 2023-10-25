@@ -1,6 +1,5 @@
 package pl.zajavka.api.dto.mapper;
 
-import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 

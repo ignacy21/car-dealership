@@ -7,7 +7,6 @@ import pl.zajavka.domain.CarServiceRequest;
 import pl.zajavka.infrastructure.database.repository.jpa.CarServiceRequestJpaRepository;
 import pl.zajavka.infrastructure.database.repository.mapper.CarServiceRequestEntityMapper;
 
-import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 

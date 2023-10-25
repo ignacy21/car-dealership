@@ -5,10 +5,7 @@ import org.mapstruct.Mapping;
 import pl.zajavka.api.dto.CarServiceCustomerRequestDTO;
 import pl.zajavka.api.dto.CarServiceMechanicProcessingUnitDTO;
 import pl.zajavka.api.dto.CarServiceRequestDTO;
-import pl.zajavka.api.dto.CarToBuyDTO;
 import pl.zajavka.domain.*;
-
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface CarServiceRequestMapper extends OffsetDateTimeMapper {

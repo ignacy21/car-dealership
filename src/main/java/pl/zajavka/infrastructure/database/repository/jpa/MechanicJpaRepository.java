@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import pl.zajavka.infrastructure.database.entity.MechanicEntity;
 
 import java.util.Optional;
-import java.util.stream.DoubleStream;
 
 @Repository
 public interface MechanicJpaRepository extends JpaRepository<MechanicEntity, Integer> {

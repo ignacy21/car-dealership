@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.zajavka.infrastructure.database.entity.CarServiceRequestEntity;
 
-import java.util.Collection;
 import java.util.Set;
 
 @Repository

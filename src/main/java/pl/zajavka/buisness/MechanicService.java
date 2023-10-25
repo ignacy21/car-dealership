@@ -1,12 +1,12 @@
 package pl.zajavka.buisness;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.buisness.DAO.MechanicDAO;
 import pl.zajavka.domain.Mechanic;
-import pl.zajavka.domain.Salesman;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class MechanicService {
     public Mechanic findMechanic(String pesel) {
         Optional<Mechanic> mechanic = mechanicDAO.findByPesel(pesel);
         if (mechanic.isEmpty()) {
-            throw new RuntimeException("Could not find mechanic by pesel: [%s]".formatted(pesel));
+            throw new NotFoundException("Could not find mechanic by pesel: [%s]".formatted(pesel));
         }
         return mechanic.get();
     }

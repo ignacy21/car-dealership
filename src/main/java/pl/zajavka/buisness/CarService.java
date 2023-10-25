@@ -1,6 +1,7 @@
 package pl.zajavka.buisness;
 
 
+import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class CarService {
     public CarToBuy findCarToBuy(String vin) {
         Optional<CarToBuy> carToBuyVin = carToBuyDAO.findCarToBuyByVin(vin);
         if (carToBuyVin.isEmpty()) {
-            throw new RuntimeException("Could not find car by vin: [%s]".formatted(vin));
+            throw new NotFoundException("Could not find car by vin: [%s]".formatted(vin));
         }
         return carToBuyVin.get();
     }

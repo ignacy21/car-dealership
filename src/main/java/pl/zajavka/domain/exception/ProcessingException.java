@@ -1,7 +1,9 @@
 package pl.zajavka.domain.exception;
 
 
-public class ProcessingException extends RuntimeException {
+import jakarta.ws.rs.NotFoundException;
+
+public class ProcessingException extends NotFoundException {
 
     public ProcessingException(String message) {
        super(message);

@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.zajavka.domain.Invoice;
-
-import java.util.Set;
 
 @Data
 @Builder

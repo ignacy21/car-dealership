@@ -2,7 +2,6 @@ package pl.zajavka.infrastructure.database.repository.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-
 import pl.zajavka.domain.ServiceMechanic;
 import pl.zajavka.infrastructure.database.entity.ServiceMechanicEntity;
 
