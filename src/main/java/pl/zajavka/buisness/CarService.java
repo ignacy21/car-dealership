@@ -1,7 +1,6 @@
 package pl.zajavka.buisness;
 
 
-import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,6 +10,7 @@ import pl.zajavka.buisness.DAO.CarToServiceDAO;
 import pl.zajavka.domain.CarHistory;
 import pl.zajavka.domain.CarToBuy;
 import pl.zajavka.domain.CarToService;
+import pl.zajavka.domain.exception.NotFoundException;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,11 +1,11 @@
 package pl.zajavka.buisness;
 
-import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zajavka.buisness.DAO.CarServiceRequestDAO;
 import pl.zajavka.domain.*;
+import pl.zajavka.domain.exception.NotFoundException;
 import pl.zajavka.domain.exception.ProcessingException;
 
 import java.time.OffsetDateTime;
