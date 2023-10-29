@@ -30,7 +30,7 @@ public class CarToServiceEntity {
     @Column(name = "model", nullable = false)
     private String model;
 
-    @Column(name = "year", nullable = false)
+    @Column(name = "production_year", nullable = false)
     private Integer year;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
