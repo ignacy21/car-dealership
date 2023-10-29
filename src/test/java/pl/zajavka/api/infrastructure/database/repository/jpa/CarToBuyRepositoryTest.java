@@ -18,6 +18,8 @@ import static pl.zajavka.api.util.EntityFixtures.*;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(PersistenceContainerTestConfig.class)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CarToBuyRepositoryTest {
 
