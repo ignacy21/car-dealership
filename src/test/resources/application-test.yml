@@ -1,4 +1,7 @@
 spring:
+  security:
+    enabled: false
+
   jpa:
     hibernate:
       ddl-auto: validate
